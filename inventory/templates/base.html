@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Product Management</title>
+    <style>
+        nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f8f8f8;
+        padding: 10px 20px;
+        }
+
+        nav div {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        }
+
+        nav a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        }
+
+        nav form {
+        margin: 0;
+        }
+
+        nav button {
+        background-color: #ff4d4d;
+        border: none;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+
+        nav button:hover {
+        background-color: #e33e3e;
+        }
+    </style>
+
+</head>
+<body>
+    <nav>
+        <div>
+            <h2><a href="{% url "product-list" %}"><b>ProductManagement</b></a></h2>
+        </div>
+
+        <div>
+            {% if user.is_authenticated %}
+                <p>Hello, {{ user.username }}</p>
+
+                <form action="{% url "logout" %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            {% else %}
+                <p><a href="{% url "login" %}">Login</a></p>
+                <p><a href="{% url "signup" %}">SignUp</a></p>
+            {% endif %}
+        </div>
+    </nav>
+    <hr>
+    {% block content %}{% endblock content %}
+</body>
+</html>
